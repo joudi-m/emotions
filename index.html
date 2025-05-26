@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emotion Wheel</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="intro-wrapper">
+    <h1 class="intro-title">Welcome to Your Emotional Scroll Journey</h1>
+    <div class="blobs">
+      <div class="blob blob-1">
+        <p>
+          In today's digital world, we often scroll endlessly through short videos and content without realizing how it affects our emotional state. This tool invites you to pause, observe, and reflect.
+        </p>
+      </div>
+      <div class="blob blob-2">
+        <p>
+          At the heart of this experience is the <strong>Emotion Wheel</strong>—a space where you can log what you're feeling while scrolling. By actively noticing your emotions, you begin to recognize patterns in how different content affects your mood, energy, and overall well-being.
+        </p>
+      </div>
+      <div class="blob blob-3">
+        <p>
+          Once you've logged your emotions, you'll gain access to a <strong>visual chart</strong> of your emotional data. From there, you can analyze your experience, making sense of what you're going through and how repeated emotional patterns may influence you in the long term.
+        </p>
+      </div>
+    </div>
+
+    <div id="start-section" class="start-section">
+      <p class="start-text">Ready to begin?<br><em>Tap Start to begin your journey.</em></p>
+      <button id="startBtn">Start</button>
+    </div>
+  </div>
+
+  <div id="wheel-container" style="display: none;">
+    <svg id="emotionWheel" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet"></svg>
+    <div id="after-controls">
+      <button id="stopBtn">Stop</button>
+    </div>
+  </div>
+
+  <div id="timerDisplay">
+    <div><span id="timer">00:00</span></div>
+    <div id="totalTime" style="margin-top: 5px; display: none;"></div>
+  </div>
+
+  <div id="postStopControls" style="display:none;">
+    <button id="continueBtn">Continue</button>
+    <button id="startOverBtn">Start Over</button>
+    <button id="toggleChartBtn" style="display: none;">Hide Chart</button>
+    <button id="toggleAnalysisBtn" style="display: none;">Hide Analysis</button>
+    <button id="analyzeBtn" style="display: none;">Analyze</button>
+  </div>
+
+  <canvas id="emotionChart" width="400" height="400" style="display:none; margin-top: 20px;"></canvas>
+  <div id="analysisResult" style="display:none; margin-top: 20px; font-size: 16px; white-space: pre-wrap;"></div>
+
+  <!-- Feedback UI -->
+  <button id="toggleFeedbackBtn">Send Feedback</button>
+
+  <div id="feedbackContainer" class="feedback-box">
+    <h3>I'd love your feedback</h3>
+    <textarea id="feedbackInput" rows="4" placeholder="What do you think? Suggestions or improvements?"></textarea>
+    <button id="submitFeedbackBtn">Submit</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>

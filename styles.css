@@ -1,0 +1,347 @@
+body {
+  margin: 0;
+  padding: 15px 15px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  background: #f4f7fa;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+position: relative;
+}
+
+#start-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#startBtn {
+  font-family: inherit;
+  width: 180px;
+  height: 50px;
+  border-radius: 12px;
+  background-color: rgb(216, 232, 247);
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1c1c1c;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.15s ease;
+}
+
+#startBtn:hover {
+  background-color: rgb(129, 176, 221);
+  transform: translateY(-2px);
+}
+
+/* Common styling for all buttons */
+button {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.15s ease;
+  min-width: 180px;
+  text-align: center;
+  background-color: #d9dfe8;
+  border: none;
+  color: #1c1c1c;
+}
+
+/* STOP button hover (red) */
+#stopBtn:hover {
+  background-color: rgb(222, 144, 144);
+  transform: translateY(-2px);
+}
+
+/* START OVER button hover (red) */
+#startOverBtn:hover {
+  background-color: rgb(225, 120, 120);
+  transform: translateY(-2px);
+}
+
+/* Other buttons hover effect (subtle gray) */
+#continueBtn:hover,
+#toggleChartBtn:hover,
+#toggleAnalysisBtn:hover {
+  background-color: rgb(129, 176, 221);
+  transform: translateY(-2px);
+}
+#analyzeBtn:hover{
+  background-color: rgb(132, 218, 200);
+  transform: translateY(-2px); 
+}
+/* Position buttons vertically on the left */
+#postStopControls,
+#after-controls{
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  display: flex;
+  flex-direction: row; /* horizontal */
+  flex-wrap: wrap;       /* ✅ allows wrapping */
+  gap: 15px;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 1000;
+}
+#timerDisplay {
+  font-family: inherit;
+  font-size: 20px;
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 30px; /* 👈 moved away from stop button on left */
+  z-index: 1000;
+  background-color: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  color: #333;
+}
+.pulse {
+  animation: pulseEase 0.5s ease-in-out;
+}
+@keyframes pulseEase {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+#timer {
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+}
+
+#emotionChart {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  padding: 0;
+  margin: 20px auto 0;
+  display: none;
+}
+
+/* Emotion analysis result blob */
+#analysisResult {
+  display: none;
+  padding: 20px;
+  margin-top: 30px;
+  background-color: #e4ebf6;
+  border: 2px solid #d0e4ff;
+  border-radius: 20%;
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 900px;
+  color: #333;
+  white-space: pre-wrap;
+  box-shadow: 0 10px 25px rgba(149, 153, 155, 0.07);
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: inherit;
+  opacity: 0;
+  animation: fadeInFloat 1s ease forwards;
+}
+
+/* Emotion wheel container */
+#wheel-container {
+  width: 1000px;
+  height: 1000px;
+  aspect-ratio: 1 / 1;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#emotionWheel {
+  width: 100%;
+  height: 100%;
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+}
+
+.segment-group {
+  transition: transform 0.2s ease;
+  transform-origin: 500px 500px;
+}
+
+.segment-group:hover,
+.segment-group.hovered {
+  transform: scale(1.04);
+}
+
+.segment-group text {
+  transition: transform 0.3s ease, font-size 0.3s ease;
+}
+
+.segment-group:hover text,
+.segment-group.hovered text {
+  font-size: 150%;
+}
+.feedback-box {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  position: fixed;
+  top: 80px;
+  right: 30px;
+  width: 300px;
+  background: #f4f7fa;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  display: none;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 2000;
+    text-align: center;
+align-items: center;
+}
+#submitFeedbackBtn:hover{
+  background-color: #008CBA;
+  color: #fff;
+}
+
+.feedback-box.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Intro and blobs */
+.intro-wrapper {
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  position: relative;
+}
+
+.intro-title {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.blobs {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.blob {
+  background: #eef3ff;
+  padding: 35px 40px;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.07);
+  line-height: 1.6;
+  font-size: 1.05em;
+  max-width: 400px;
+  opacity: 0;
+  animation: fadeInFloat 1s ease forwards;
+}
+
+.blob-1 {
+  animation-delay: 0.2s;
+}
+
+.blob-2 {
+  animation-delay: 0.4s;
+}
+
+.blob-3 {
+  animation-delay: 0.6s;
+}
+
+/* Fade in animation */
+@keyframes fadeInFloat {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 400px) {
+  body {
+    padding: 0 10px;
+    max-height: 100vh;
+  }
+
+  .blobs {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .blob{
+    width: 90%;
+    max-width: 400px;
+  }
+
+  #postStopControls {
+    position: static;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #timerDisplay {
+    top: auto;
+    bottom: 20px;
+    right: 20px;
+  }
+  #wheel-container {
+    padding: 0 10px;
+    max-height: 100vh;
+  }
+
+  #emotionWheel {
+    max-height: 95vh;
+  }
+
+  #timerDisplay {
+    top: auto;
+    bottom: 80px;
+    right: 20px;
+    left: auto;
+    font-size: 16px;
+    padding: 6px 10px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+ 
+  #emotionChart {
+    height: 300px;
+  }
+}
+#toggleFeedbackBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 3000;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  align-items: center;
+}

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-
+const API_BASE = "https://emotions-uejz.onrender.com";
 const emotionData = [
   {
     main: "Angry",
@@ -151,7 +151,7 @@ Avoid giving advice. Don’t mention therapy. Reflect like someone helping a fri
 `.trim();
 
 try {
-  const response = await fetch("https://emotions-uejz.onrender.com/api/analyze", {
+  const response = await fetch(`${API_BASE}/api/analyze`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -178,7 +178,7 @@ Duration: ${formatTime(secondsElapsed)}
 Analysis: ${message || "No analysis text"}
 `;
 
-  await fetch("https://emotions-uejz.onrender.com/api/feedback", {
+  await fetch(`${API_BASE}/api/feedback`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ feedback: feedbackMessage })
@@ -505,7 +505,7 @@ svg.addEventListener("touchmove", onMove, { passive: false });
 svg.addEventListener("touchend", onEnd);
 
 
-const feedbackURL = 'http://emotions-uejz.onrender.com/api/feedback';
+  const feedbackURL = `${API_BASE}/api/feedback`;
   const feedbackBox = document.getElementById("feedbackContainer");
   const toggleBtn = document.getElementById("toggleFeedbackBtn");
   const submitBtn = document.getElementById("submitFeedbackBtn");

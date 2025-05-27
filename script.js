@@ -525,7 +525,6 @@ svg.addEventListener("touchend", onEnd);
       try {
         await fetch(feedbackURL, {
           method: "POST",
-          mode: "no-cors",
           headers: {
             "Content-Type": "application/json"
           },

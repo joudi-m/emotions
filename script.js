@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-const API_BASE = "https://emotions-uejz.onrender.com";
+const API_BASE = "https://emotion-proxy-server.onrender.com";
 const emotionData = [
   {
     main: "Angry",

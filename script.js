@@ -196,6 +196,7 @@ Analysis: ${message || "No analysis text"}
 
 function showEmotionChart() {
   // Prevent it from growing infinitely
+  chartCanvas.style.display = "block";
 const emotionCount = sessionLog.length;
 const dynamicHeight = Math.min(600, 300 + emotionCount * 20);
 chartCanvas.style.maxHeight = "600px";

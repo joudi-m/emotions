@@ -128,12 +128,13 @@ button {
 
 /* Emotion analysis result blob */
 #analysisResult {
+  z-index: 2000; /* ✅ make sure it's above all other elements */ 
   display: none;
   position: fixed; /* ✅ so it's in the center of the screen */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); /* ✅ truly center it */
-  z-index: 2000; /* ✅ make sure it's above all other elements */
+
 
   background-color: #e4ebf6;
   border: 2px solid #d0e4ff;

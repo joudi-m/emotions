@@ -150,48 +150,59 @@ Based on this pattern, write a short reflection (5–8 sentences) in a personal,
 Avoid giving advice. Don’t mention therapy. Reflect like someone helping a friend make sense of their own emotional habits.
 `.trim();
 
-      try {
-        const response = await fetch("http://localhost:3000/api/analyze", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ prompt })
-        });
-        const data = await response.json();
-        const message = data.message || "No analysis text";
-        analysisBox.textContent = message || "No response received.";
-        toggleAnalysisBtn.style.display = "inline-block";
+try {
+  const response = await fetch("https://emotions-uejz.onrender.com/api/analyze", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ prompt })
+  });
 
-        // Send session to Google Sheet
-       const feedbackMessage = `
+  let message = "No response received.";
+  try {
+    const data = await response.json();
+    message = data.message || message;
+  } catch (e) {
+    console.error("❌ Failed to parse response:", e);
+  }
+
+  analysisBox.textContent = message;
+  toggleAnalysisBtn.style.display = "inline-block";
+
+  // Send session to Google Sheet
+  const feedbackMessage = `
 Total emotions: ${sessionLog.length}
 Unique emotions: ${uniqueEmotions.join(', ')}
 Duration: ${formatTime(secondsElapsed)}
 Analysis: ${message || "No analysis text"}
 `;
 
-await fetch("http://localhost:3000/api/feedback", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ feedback: feedbackMessage })
-});
+  await fetch("https://emotions-uejz.onrender.com/api/feedback", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ feedback: feedbackMessage })
+  });
 
-        console.log("✅ Session data sent to Google Sheet!");
-      } catch (err) {
-        analysisBox.textContent = "Error during analysis.";
-        console.error("OpenAI request failed:", err);
-      }
+  console.log("✅ Session data sent to Google Sheet!");
+} catch (err) {
+  analysisBox.textContent = "Error during analysis.";
+  console.error("OpenAI request failed:", err);
+}
+
     });
   }
 
 
 function showEmotionChart() {
-    chartCanvas.style.height = "auto"; // reset height first
-    const emotionCount = sessionLog.length;
-    const dynamicHeight = Math.min(600, 300 + emotionCount * 20);
-    chartCanvas.style.height = `${dynamicHeight}px`;
-    chartCanvas.style.display = 'block';
+  // Prevent it from growing infinitely
+  chartCanvas.style.display = "block";
+const emotionCount = sessionLog.length;
+const dynamicHeight = Math.min(600, 300 + emotionCount * 20);
+chartCanvas.style.maxHeight = "600px";
+chartCanvas.style.height = `${dynamicHeight}px`;
+chartCanvas.style.overflow = "auto"; // prevent overflow
+
 
   if (window.myEmotionChart) {
     window.myEmotionChart.destroy();
@@ -494,7 +505,7 @@ svg.addEventListener("touchmove", onMove, { passive: false });
 svg.addEventListener("touchend", onEnd);
 
 
-const feedbackURL = 'http://localhost:3000/api/feedback';
+const feedbackURL = 'http://emotions-uejz.onrender.com/api/feedback';
   const feedbackBox = document.getElementById("feedbackContainer");
   const toggleBtn = document.getElementById("toggleFeedbackBtn");
   const submitBtn = document.getElementById("submitFeedbackBtn");

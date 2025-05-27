@@ -151,7 +151,7 @@ Avoid giving advice. Don’t mention therapy. Reflect like someone helping a fri
 `.trim();
 
       try {
-        const response = await fetch("http://localhost:3000/api/analyze", {
+        const response = await fetch("https://emotions-uejz.onrender.com/api/analyze", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -171,7 +171,7 @@ Duration: ${formatTime(secondsElapsed)}
 Analysis: ${message || "No analysis text"}
 `;
 
-await fetch("http://localhost:3000/api/feedback", {
+await fetch("http://emotions-uejz.onrender.com/api/feedback", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ feedback: feedbackMessage })

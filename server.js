@@ -32,6 +32,10 @@ app.post('/api/analyze', async (req, res) => {
   const { prompt } = req.body;
   console.log("🔍 Prompt received:", prompt);
 
+  if (!prompt) {
+    return res.status(400).json({ success: false, message: "No prompt provided." });
+  }
+
   try {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -51,13 +55,15 @@ app.post('/api/analyze', async (req, res) => {
 
     const data = await response.json();
     console.dir(data, { depth: null });
+
     const message = data?.choices?.[0]?.message?.content || "⚠️ No message received.";
     res.json({ success: true, message });
   } catch (err) {
     console.error("❌ OpenAI Error:", err);
-    res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({ success: false, message: err.message || "Unknown error" });
   }
 });
+
 
 app.listen(PORT, () => {
   console.log(`✅ Server is running at http://localhost:${PORT}`);

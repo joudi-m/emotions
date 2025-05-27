@@ -189,7 +189,10 @@ await fetch("http://emotions-uejz.onrender.com/api/feedback", {
 function showEmotionChart() {
     chartCanvas.style.height = "auto"; // reset height first
     const emotionCount = sessionLog.length;
-    const dynamicHeight = Math.min(600, 300 + emotionCount * 20);
+    const maxChartHeight=600;
+    const baseHeight= 300;
+    const stepPerEmotion = 20;
+    const dynamicHeight = Math.min(maxChartHeight, baseHeight + sessionLog * stepPerEmotion);
     chartCanvas.style.height = `${dynamicHeight}px`;
     chartCanvas.style.display = 'block';
 
